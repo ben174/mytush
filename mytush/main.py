@@ -44,11 +44,10 @@ def main():
             make_request(vcf)
 
     # delete all mailbox messages
-    #m.store("1:*",'+X-GM-LABELS', '\\Trash')
+    m.store("1:*",'+X-GM-LABELS', '\\Trash')
 
 
 def parse_vcf(vcf): 
-    print vcf
     addr = re.findall(r"item[1-9]\.ADR.+?;.+?;;(.*);(.*);(.*);(.*);(.*)", vcf, re.M)[0]
     latlon = re.findall(r"item[1-9]\.URL.*sll=(.+?)\\,(.+?)&", vcf, re.M)[0]
     location = {}
@@ -59,7 +58,7 @@ def parse_vcf(vcf):
     location['postalCode'] = addr[3]
     location['countryLong'] = 'United States'
     location['country'] = 'US'
-    location['latLng'] = { 'lat': latlon[0], 'lon': latlon[1] }
+    location['latLng'] = { 'lat': latlon[0], 'lng': latlon[1] }
     vcf_obj = { 'mobileNumber': settings.mobile_num, 
             'locations': [location,] } 
     return vcf_obj
@@ -70,7 +69,6 @@ def make_request(vcf):
     url = 'https://www.mapquest.com/FordSyncServlet/submit'
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
     json_data = json.dumps(vcf_dict)
-    print json_data
     request_object = urllib2.Request(url, json_data, headers)
     response = urllib2.urlopen(request_object)
     print response.read()
