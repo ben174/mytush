@@ -1,4 +1,4 @@
-### Send web points directly to MyFord Touch / SYNC services.  First Level Header
+### Send web points directly to MyFord Touch / SYNC services.  
 
 The intent of this utility is to make it easy to send web points from a phone to MyFord Touch (Sync). Currently they have a crappy app that is supposed to do this called Sync Destinations. But it sucks. The map data it uses is bad and they should feel bad. This allows me to use my native Maps application and just share the point. I email it to an email address, and this script checks that mail address at a regular interval. When it sees a new message, it grabs the map point (VCF file), parses it, then sends it to the web service.
 
